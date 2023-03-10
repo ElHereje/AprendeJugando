@@ -29,7 +29,8 @@ suma = 1 + [2,3,4,5]
                         5 + []
 
 
-'''
+En nuestro caso:
+                        
 lista = [1, 2, 3, 4, 5]
 
 def sumar(lista):
@@ -38,4 +39,17 @@ def sumar(lista):
     else:
         suma = lista[0] + sumar(lista[1:])
     return suma
+print(sumar(lista))
+
+'''
+# esta función optimizada quedaría como:
+
+lista = [1, 2, 3, 4, 5]
+
+def sumar(lista):
+    if lista == []:
+        return 0
+    else:
+        return lista[0] + sumar(lista[1:]) # sacamos el 1º y sumamos el resto...
+    
 print(sumar(lista))
