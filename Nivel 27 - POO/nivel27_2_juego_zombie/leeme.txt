@@ -1,0 +1,4 @@
+Implementamos la clase zombi, incluyendo los métodos init,  moverse y no_visible,
+que hace que al pasar de la calle 40 o bajar de la 0 , sean invisibles.
+Se definen en el constructor, la calle donde están y la direección que toman
+Tienen un movimiento aleatorio de entre 1 y 3 calles.

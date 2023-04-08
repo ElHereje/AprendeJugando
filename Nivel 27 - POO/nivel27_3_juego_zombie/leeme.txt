@@ -1,0 +1,9 @@
+Se propone como reto que cada zombi, una vez asignada su velocidad,
+no la cambién y sea fija.
+Pare ello, en la clase zombi, añadimos la variable velocidad con
+un random. y eliminamos dicho random del método moverse.
+
+A continuación comenzamos con la clase ppal del programa, importando
+las calases Persona y Zombi
+
+implememntamos el método situación en la clase persona
