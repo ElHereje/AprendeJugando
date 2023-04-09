@@ -1,0 +1,6 @@
+Vamos a mejorar el programa agreando mas jugadores,
+incluyendo la opción energía, que baja al andar.
+Se visualizará una tabla con la situación y desaparecerán los
+que van perdiendo.
+
+Se han modificado la clase persona y la ppal.
