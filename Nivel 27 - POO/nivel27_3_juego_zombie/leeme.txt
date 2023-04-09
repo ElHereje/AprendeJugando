@@ -6,4 +6,13 @@ un random. y eliminamos dicho random del método moverse.
 A continuación comenzamos con la clase ppal del programa, importando
 las calases Persona y Zombi
 
-implememntamos el método situación en la clase persona
+implememntamos el método situación en la clase persona.
+
+En la clasee ppal, imprimimos intro y pedimos nombre
+
+Indicamos también la ubicacioón de los zombis.
+
+ahora hay que implementar las distintas situaciones
+        * movimientos del jugador
+        * que el jugador gane
+        * que el jugador pierda  
