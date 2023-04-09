@@ -13,6 +13,7 @@ En la clasee ppal, imprimimos intro y pedimos nombre
 Indicamos también la ubicacioón de los zombis.
 
 ahora hay que implementar en la clase ppal las distintas situaciones
-        * movimientos del jugador
+       
+        * movimientos del jugador y de los zombis
         * que el jugador gane
         * que el jugador pierda  
