@@ -1,0 +1,12 @@
+Se implementa el código para cuando el jugador gana y para cuando el jugador
+se encuentra con un zombi.
+
+Implementamos la opción de la velocidad a la quería correr el jugador.
+
+Implementamos el movimiento de los zombis, e incluimos la opcion
+de que desaparezcan si se salen de los límites.
+
+Para el siguente, vamos a mejorar el programa agreando mas jugadores,
+incluyendo la opción energía, que baja al andar.
+Se visualizará una tabla con la situación y desaparecerán los
+que van perdiendo.
