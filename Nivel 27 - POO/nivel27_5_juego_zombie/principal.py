@@ -22,6 +22,39 @@ class Principal:
     # creamos los 10 zombis y los incluimos en la lista "horda"
     horda = []
     for i in range(10):
+from persona import Persona
+from zombi import Zombi
+import os
+
+class Principal:
+    os.system("cls")
+    
+    # creamos uas introducción y a continuación, el objeto persona para el jugador
+    print()
+    print(" La ciudad se ha llenado de zombis.")
+    print(" Estás en la calle 1 y has de llegar")
+    print(" a la calle 40 para poder salvarte.")
+    print()
+    print(" Los zombis avanzan 1, 2 ó 3 calles.")
+    print(" Tú puedes avanzar 1, 2 ó 3 calles.")
+    print()
+    
+    # Introducimos opción para el nº de jugadores
+    numero = ""
+    while numero not in ("1", "2", "3", "4"):
+        numero = input(" Número de jugadores (1/4): ")
+
+    # creamos la lista de los jugadores
+    jugadores = []
+    for i in range(int(numero) + 1):
+        nombre = input(" Nombre de jugador {i}: ").capitalize()
+        # creamos un objeto Persona por cada jugador
+        jugador = Persona(nombre)
+        # añadimos ese objeto a la lista jugadores
+        jugadores.append(jugador)
+    
+    horda = []
+    for i in range(10):
         z = Zombi()
         horda.append(z)
     
@@ -30,8 +63,13 @@ class Principal:
         
         os.system("cls")
         
-        # llamamos al métdodo situación
-        print(jugador.situacion())
+        # mostramos la tabla de situación
+        print(" NOMBRE    -   CALLE   -   ENERGIA")
+        print(" ---------------------------------")
+        for jugador in jugadores:
+            nom, cal, ene = jugador.situacion()
+            print("  {:8}  -    {:2}     -     {:2}".format(nom, cal, ene))
+        print()
         
         # mostramos las calles en las que están los zombis
         calles = []
@@ -45,12 +83,19 @@ class Principal:
         print()
         print()
         
-        # si el jugador gana
-        if jugador.calle > 40:
-            print(" No te ha visto ningún zombi.")
-            print(" Te has librado de ser comido.")
+        # si los jugadores ganan:
+        ganadores = []
+        for jugador in jugadores:
+            if jugador.calle >= 40:
+                ganadores.append(jugador)
+        if len(ganadores) > 0:
+            for jugador in ganadores:
+                print(f" {jugador}, has escapado de los zombis.")
+            print(" Has/Habeis ganado la partida.")
             print()
             break
+
+        
         
         # si coincide con un zombi...
         comido = False
