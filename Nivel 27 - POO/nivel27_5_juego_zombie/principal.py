@@ -44,7 +44,7 @@ class Principal:
         print(" ---------------------------------")
         for jugador in jugadores:
             nom, cal, ene = jugador.situacion()
-            print("  {:8}  -   {:2}     -     {:2}".format(nom, cal, ene))
+            print("  {:8} -    {:2}     -     {:2}".format(nom, cal, ene))
         print()
         
         # mostramos las calles en las que están los zombis
@@ -75,7 +75,7 @@ class Principal:
         for jugador in list(jugadores): # creamos una lista para poder eliminar jugadores
             if jugador.energia <= 0:
                 print(f" {jugador}, has perdido toda la energía. Estás comido...")
-                jugador.remove(jugador)
+                jugadores.remove(jugador)
 
         
         # si algún jugador coincide con un zombi...
@@ -89,7 +89,7 @@ class Principal:
 
         # velocidad de los jugadores.
         print()
-        for jugador in list(jugadores):
+        for jugador in jugadores:
             velocidad = ""
             while velocidad not in ("1", "2", "3"):
                 velocidad = input(f" {jugador.nombre}, cuanto quieres correr (1/2/3): ")
