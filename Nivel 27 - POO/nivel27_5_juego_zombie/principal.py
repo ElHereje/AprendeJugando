@@ -44,7 +44,7 @@ class Principal:
         print(" ---------------------------------")
         for jugador in jugadores:
             nom, cal, ene = jugador.situacion()
-            print("  {:8}  -    {:2}     -     {:2}".format(nom, cal, ene))
+            print("  {:8}  -   {:2}     -     {:2}".format(nom, cal, ene))
         print()
         
         # mostramos las calles en las que están los zombis
@@ -66,7 +66,7 @@ class Principal:
                 ganadores.append(jugador)
         if len(ganadores) > 0:
             for jugador in ganadores:
-                print(f" {jugador}, has escapado de los zombis.")
+                print(f" {jugador.nombre}, has escapado de los zombis.")
             print(" Has/Habeis ganado la partida.")
             print()
             break
@@ -83,16 +83,16 @@ class Principal:
             for zombi in horda:
                 if zombi.calle == jugador.calle:
                     if jugador in jugadores:
-                        print(f" {jugador}, un zombi te acaba de ver. Has perdido")
+                        print(f" {jugador.nombre}, un zombi te acaba de ver. Has perdido")
                         jugadores.remove(jugador)
         
 
         # velocidad de los jugadores.
         print()
-        for jugador in jugadores:
+        for jugador in list(jugadores):
             velocidad = ""
             while velocidad not in ("1", "2", "3"):
-                velocidad = input(" {}, cuanto quieres correr (1/2/3): ".format(jugador))
+                velocidad = input(f" {jugador.nombre}, cuanto quieres correr (1/2/3): ")
             jugador.moverse(velocidad)
         
 
