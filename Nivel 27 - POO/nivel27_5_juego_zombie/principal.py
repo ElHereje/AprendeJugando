@@ -29,8 +29,9 @@ class Principal:
         # añadimos ese objeto a la lista jugadores
         jugadores.append(jugador)
     
+    # creamos la horda de zombis
     horda = []
-    for i in range(10):
+    for i in range(10): # en este caso, serán 10 zombis
         z = Zombi()
         horda.append(z)
     
