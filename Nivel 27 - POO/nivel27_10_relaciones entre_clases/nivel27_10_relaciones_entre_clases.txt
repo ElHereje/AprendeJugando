@@ -1,0 +1,7 @@
+
+
+            RELACIONES ENTRE CLASES Y OBJETOS
+
+Herencia    -   Es un    -   Animal -> Perro
+Composicion -   Tiene un -   Casa -> Habitacion   
+Agregacion  -   Usa un   -   Curso -> Alumno
