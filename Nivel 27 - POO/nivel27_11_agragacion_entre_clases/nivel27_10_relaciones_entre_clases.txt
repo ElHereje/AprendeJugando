@@ -1,5 +1,0 @@
-
-Vamos a crear un método para mejorar el arma "encontrar_arma", quye 
-Aumente en 1 la categoria de esa arma
-
-
