@@ -1,6 +1,5 @@
 '''programa que gestione la matriculación de alumnos
 en determinados cursos.
-
 definir métodos que:
 * agregen alumnos al curso
 * eliminen alumnos del curso.
@@ -18,15 +17,30 @@ class Alumno:
     
 class Curso:
     
-    def __init__(self, asignatura):
-        self.asignatura = asignatura
+    def __init__(self, nombre):
+        self.nombre = nombre
         self.alumnos = []
+
+    def __str__(self):
+        return self.nombre
         
     def matricular_alumno(self, alunmno):
         self.alumnos.append(alunmno)
         
-    def anular_matricula(self, nombre_alunmno):
-        self.nombre_alumno = nombre_alunmno
+    def anular_matricula(self, alumno):
+        self.alumnos.remove(alumno)
+
+    def edad_media_alumno(self):
+        media = 0
+        for alumno in self.alumnos:
+            media += alumno.edad
+        media = media / len(self.alumnos)
+        return media
+    
+    def mostrar_alumnos(self):
+        print(f"Alumnos del curso {self}:")
+        for alumno in self.alumnos:
+            print(f"- {alumno}")
 
 astronomia = Curso("Astronomia")
 
@@ -39,3 +53,11 @@ astronomia.matricular_alumno(susana)
 astronomia.matricular_alumno(raquel)
 
 astronomia.anular_matricula(susana)
+
+# esto lo vamos a realizar con el método "Mostrar alumnos"
+# print(f"Alumnos del curso {astronomia}:")
+# for alumno in astronomia.alumnos:
+#     print(f"- {alumno}")
+astronomia.mostrar_alumnos()
+
+print(f"Edad media del curso {astronomia}: {astronomia.edad_media_alumno()}")
