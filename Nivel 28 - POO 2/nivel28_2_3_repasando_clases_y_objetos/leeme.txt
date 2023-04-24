@@ -1,0 +1,5 @@
+Se va a realizar de dos maneras.
+En este primero, se hará con una relación de agregación.
+En el siguiente, se hara con una relación de composición.
+En la siguiente versión se intentará también optimizar
+el código
