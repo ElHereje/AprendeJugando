@@ -1,0 +1,2 @@
+Vamos a realizar el mismo ejemplo, pero esta vez con una relación 
+de composición entre clases.
