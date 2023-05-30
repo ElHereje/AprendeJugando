@@ -41,10 +41,10 @@ nave_izquierda = pygame.image.load("./images/nave_izquierda.png").convert_alpha(
 nave_derecha = pygame.image.load("./images/nave_derecha.png").convert_alpha()
 
 # asteroide grande
-aste_1a = pygame.image.load("./images/asteroide_1a.png").convert().set_colorkey(BLANCO)
-aste_1b = pygame.image.load("./images/asteroide_1b.png").convert().set_colorkey(BLANCO)
-aste_1c = pygame.image.load("./images/asteroide_1c.png").convert().set_colorkey(BLANCO)
-aste_1d = pygame.image.load("./images/asteroide_1d.png").convert().set_colorkey(BLANCO)
+aste_1a = pygame.image.load("./images/asteroide_1a.png").convert_alpha()
+aste_1b = pygame.image.load("./images/asteroide_1b.png").convert_alpha()
+aste_1c = pygame.image.load("./images/asteroide_1c.png").convert_alpha()
+aste_1d = pygame.image.load("./images/asteroide_1d.png").convert_alpha()
 
 # definimos 4 asteroides dif, con didtinto orden, para que no roten
 #con el mismo orden
@@ -53,9 +53,21 @@ aste_3 = [aste_1b, aste_1c, aste_1d, aste_1a]
 aste_4 = [aste_1c, aste_1d, aste_1a, aste_1b]
 aste_5 = [aste_1d, aste_1a, aste_1b, aste_1c]
 
+# igual pero con el pequeño
+aste_2a = pygame.image.load("./images/asteroide_2a.png").convert_alpha()
+aste_2b = pygame.image.load("./images/asteroide_2b.png").convert_alpha()
+aste_2c = pygame.image.load("./images/asteroide_2c.png").convert_alpha()
+aste_2d = pygame.image.load("./images/asteroide_2d.png").convert_alpha()
+
+aste_2 = [aste_2a, aste_2b, aste_2c, aste_2d]
+aste_6 = [aste_2b, aste_2c, aste_2d, aste_2a]
+aste_7 = [aste_2c, aste_2d, aste_2a, aste_2b]
+aste_8 = [aste_2d, aste_2a, aste_2b, aste_2c]
+
 
 # creamos los asteroides
 asteroides_grandes = []
+asteroides_pequenios = []
 
 for i in range(10): # creamos primero 10 asteroides
     x = random.randint(0, ANCHO)
@@ -64,6 +76,17 @@ for i in range(10): # creamos primero 10 asteroides
     f = random.choice([aste_1, aste_3, aste_4, aste_5])
     a = [f, x, y, v]
     asteroides_grandes.append(a)
+
+for i in range(10):
+    x = random.randint(0, ANCHO)
+    y = random.randint(50, ALTO-120)
+    v = random.randint(1, 4)
+    f = random.choice([aste_2, aste_6, aste_7, aste_8])
+    a = [f, x, y, v]
+    asteroides_pequenios.append(a)
+
+asteroides = asteroides_grandes + asteroides_pequenios
+
 
 # Datos
 vidas = 3
@@ -117,6 +140,12 @@ while jugando:
         a[1] += a[3] # aumentamos la vel
         if a[1] > ANCHO:
             a[1] = -64
+            
+    for a in asteroides_pequenios:
+        a[1] += a[3]
+        if a[1] > ANCHO:
+            a[1] = -32        
+    
     
     nave_pos_x += nave_vel_x
     nave_pos_y += nave_vel_y
@@ -134,6 +163,9 @@ while jugando:
         if colision(a[1], a[2], 64, 64, nave_pos_x, nave_pos_y, 32, 32, 15):
             jugando = False
 
+    for a in asteroides_pequenios:
+        if colision(a[1], a[2], 32, 32, nave_pos_x, nave_pos_y, 32, 32, 15):
+            jugando = False
 
     # Imagenes
     ventana.blit(fondo, (0, 0))
@@ -147,16 +179,16 @@ while jugando:
         frames_asteroides = 1
 
     if frames_asteroides < 11:
-        for a in asteroides_grandes: # colocamos la imagen dependiendo de los frames
+        for a in asteroides: # colocamos la imagen dependiendo de los frames
             ventana.blit(a[0][0], (a[1], a[2]))
     elif frames_asteroides < 21:
-        for a in asteroides_grandes:
+        for a in asteroides:
             ventana.blit(a[0][1], (a[1], a[2]))
     elif frames_asteroides < 31:
-        for a in asteroides_grandes:
+        for a in asteroides:
             ventana.blit(a[0][2], (a[1], a[2]))
     elif frames_asteroides < 41:
-        for a in asteroides_grandes:
+        for a in asteroides:
             ventana.blit(a[0][3], (a[1], a[2]))
 
     if direccion == "arriba":
