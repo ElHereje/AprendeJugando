@@ -1,7 +1,10 @@
+
 import pygame
 import copy
+import random
+import math
 
-# inicializamos
+# Inicializar
 pygame.init()
 
 # Medidas
@@ -9,76 +12,31 @@ ANCHO = 1280
 ALTO = 720
 
 # Colores
-NEGRO = (0, 0, 0)
 BLANCO = (255, 255, 255)
+NEGRO = (0, 0, 0)
 VERDE = (0, 255, 0)
 MARRON = (77, 38, 0)
 AZUL = (0, 0, 255)
 GRIS = (184, 184, 184)
 
-
-# Mapas
-mapa1 = [
-    "         F      ",
-    " F            F ",
-    "   AFAAF        ",
-    "   AAAFA   MM   ",
-    "   F       MM  F",
-    "           MM   ",
-    "           MM   ",
-    " F    P         ",
-    "              F "
-    ]
-
-
-mapa2 = [
-    "    P         F ",
-    "         AAFA   ",
-    " F       FAAA   ",
-    "         AFAA   ",
-    "     F          ",
-    "F  SSSS         ",
-    "   SSSS     F   ",
-    "                ",
-    "       F      F "
-    ]
-
-
-# Funciones
-def construir_mapa(superficie, mapa):
-    limites = []
-    frutas = []
-    puertas = []
-    x = 0
-    y = 0
-    for linea in mapa:
-        for baldosa in linea:
-            if baldosa == "M":
-                limites.append([baldosa_muro, pygame.Rect(x, y, 80, 80)])
-            elif baldosa == "S":
-                limites.append([baldosa_agua, pygame.Rect(x, y, 80, 80)])
-            elif baldosa == "A":
-                limites.append([baldosa_arbol, pygame.Rect(x, y, 80, 80)])
-            elif baldosa == "F":
-                frutas.append([baldosa_manzana, pygame.Rect(x, y, 80, 80)])
-            elif baldosa == "P":
-                puertas.append([baldosa_puerta, pygame.Rect(x, y, 80, 80)])
-            x += 80
-        x = 0
-        y += 80
-    return limites, frutas, puertas
-
 # Ventana
+
 ventana = pygame.display.set_mode((ANCHO, ALTO))
 reloj = pygame.time.Clock()
 
-baldosa_muro = pygame.image.load('baldosa_muro.png').convert()
-baldosa_agua = pygame.image.load('baldosa_agua.png').convert()
-baldosa_puerta = pygame.image.load('baldosa_puerta.png').convert_alpha()
-baldosa_manzana = pygame.image.load('baldosa_manzana.png').convert_alpha()
-baldosa_arbol = pygame.image.load('baldosa_arbol.png').convert_alpha()
+imagen_fondo = pygame.image.load("fondo_mapa2.png").convert()
 
-fondo = pygame.image.load("fondo_mapa.png").convert_alpha()
+monstruo1_der = pygame.image.load("mon_der1.png").convert_alpha()
+monstruo2_der = pygame.image.load("mon_der2.png").convert_alpha()
+monstruo1_izq = pygame.image.load("mon_izq1.png").convert_alpha()
+monstruo2_izq = pygame.image.load("mon_izq2.png").convert_alpha()
+monstruo1_arr = pygame.image.load("mon_arr1.png").convert_alpha()
+monstruo2_arr = pygame.image.load("mon_arr2.png").convert_alpha()
+monstruo1_baj = pygame.image.load("mon_baj1.png").convert_alpha()
+monstruo2_baj = pygame.image.load("mon_baj2.png").convert_alpha()
+monstruo0_par = pygame.image.load("mon_par0.png").convert_alpha()
+
+monstruo_imagen = monstruo0_par
 
 jugador0_par = pygame.image.load("par_0.png").convert_alpha()
 jugador1_der = pygame.image.load("der_1.png").convert_alpha()
@@ -100,26 +58,33 @@ jugador4_baj = pygame.image.load("baj_4.png").convert_alpha()
 
 jugador_imagen = jugador0_par
 
+# Funciones
+
+def avistamiento(a, b, distancia):
+    if (math.sqrt(((b.x - a.x)**2) + ((b.y - a.y)**2))) < distancia:
+        return True
+    else:
+        return False
 
 # Datos
-habitacion1 = construir_mapa(ventana, mapa1)
-habitacion2 = construir_mapa(ventana, mapa2)
-
-habitacion = habitacion1
 
 jugador_rectangulo = jugador_imagen.get_rect()
-print(jugador_rectangulo)
 jugador_rectangulo.x = 100
 jugador_rectangulo.y = 300
-print(jugador_rectangulo)
 jugador_vel_x = 0
 jugador_vel_y = 0
 frames_jugador = 0
 
+monstruo_rectangulo = monstruo_imagen.get_rect()
+monstruo_rectangulo.x = 600
+monstruo_rectangulo.y = 300
+frames_monstruo = 0
 
 # Bucle principal
+
 jugando = True
 while jugando:
+
     reloj.tick(60)
 
     # Eventos
@@ -134,30 +99,60 @@ while jugando:
 
     jugador_vel_x = 0
     jugador_vel_y = 0
-
-    pulsado = pygame.key.get_pressed()
     
-    if pulsado[pygame.K_LEFT] and not pulsado[pygame.K_RIGHT]:
+    tecla = pygame.key.get_pressed()
+    
+    if tecla[pygame.K_LEFT] and not tecla[pygame.K_RIGHT]:
         jugador_vel_x = -3
         moviendose_izquierda = True
-    if pulsado[pygame.K_RIGHT] and not pulsado[pygame.K_LEFT]:
+    if tecla[pygame.K_RIGHT] and not tecla[pygame.K_LEFT]:
         jugador_vel_x = 3
         moviendose_derecha = True
-    if pulsado[pygame.K_UP] and not pulsado[pygame.K_DOWN]:
+    if tecla[pygame.K_UP] and not tecla[pygame.K_DOWN]:
         jugador_vel_y = -3
         moviendose_arriba = True
-    if pulsado[pygame.K_DOWN] and not pulsado[pygame.K_UP]:
+    if tecla[pygame.K_DOWN] and not tecla[pygame.K_UP]:
         jugador_vel_y = 3
         moviendose_abajo = True
 
+    # Lógica monstruo
+    
+    monstruo_derecha = False
+    monstruo_izquierda = False
+    monstruo_abajo = False
+    monstruo_arriba = False
+    monstruo_parado = False
 
-    # LÓGICA
+    if avistamiento(monstruo_rectangulo, jugador_rectangulo, 200):
+        if monstruo_rectangulo.x > jugador_rectangulo.x:
+            monstruo_rectangulo.x -= 1
+            monstruo_izquierda = True
+        elif monstruo_rectangulo.x < jugador_rectangulo.x:
+            monstruo_rectangulo.x += 1
+            monstruo_derecha = True  
+        if monstruo_rectangulo.y > jugador_rectangulo.y:
+            monstruo_rectangulo.y -= 1
+            monstruo_arriba = True
+        elif monstruo_rectangulo.y < jugador_rectangulo.y:
+            monstruo_rectangulo.y += 1
+            monstruo_abajo = True
+    else:
+        monstruo_parado = True
 
-    # actuaclizamos la posición
+    if monstruo_rectangulo.x > ANCHO - 60:
+        monstruo_rectangulo.x = ANCHO - 60
+    if monstruo_rectangulo.x < 0:
+        monstruo_rectangulo.x = 0
+    if monstruo_rectangulo.y > ALTO - 60:
+        monstruo_rectangulo.y = ALTO - 60
+    if monstruo_rectangulo.y < 0:
+        monstruo_rectangulo.y = 0
+
+    # Lógica personaje
+
     jugador_rectangulo.x += jugador_vel_x
     jugador_rectangulo.y += jugador_vel_y
 
-    # verificamos que no se sale de la pantall
     if jugador_rectangulo.x > ANCHO - 60:
         jugador_rectangulo.x = ANCHO - 60
     if jugador_rectangulo.x < 0:
@@ -167,35 +162,70 @@ while jugando:
     if jugador_rectangulo.y < 0:
         jugador_rectangulo.y = 0
 
-    # comprobamos colisiones con las diferentes baldiosas
-    for limite in habitacion[0]:# (limites)
-        if jugador_rectangulo.colliderect(limite[1]):
-            jugador_rectangulo.x -= jugador_vel_x
-            jugador_rectangulo.y -= jugador_vel_y
+    # Colisiones
 
-    for fruta in copy.copy(habitacion[1]):# (frutas)
-        if jugador_rectangulo.collidepoint(fruta[1].centerx, fruta[1].centery):
-            habitacion[1].remove(fruta)
-
-    for puerta in habitacion[2]: # (puertas)
-        if jugador_rectangulo.collidepoint(puerta[1].centerx, puerta[1].centery):
-            if habitacion == habitacion1:
-                habitacion = habitacion2
-                jugador_rectangulo.x = 400
-                jugador_rectangulo.y = 60
-            else:
-                habitacion = habitacion1
-                jugador_rectangulo.x = 560
-                jugador_rectangulo.y = 620
+    if monstruo_rectangulo.collidepoint(jugador_rectangulo.centerx,
+                                        jugador_rectangulo.centery):
+        pygame.time.delay(1000)
+        break
                 
     # Dibujos
 
-    ventana.blit(fondo, (0,0))
+    ventana.blit(imagen_fondo, (0,0))
 
-    for elemento in habitacion:
-        for baldosa in elemento:
-            ventana.blit(baldosa[0], baldosa[1])
+    # Movimiento monstruo
 
+    if monstruo_derecha:
+        frames_monstruo += 1
+        if frames_monstruo >= 21:
+            frames_monstruo = 1
+        if frames_monstruo < 11:
+            monstruo_imagen = monstruo1_der
+        elif frames_monstruo < 21:
+            monstruo_imagen = monstruo2_der
+            
+        ventana.blit(monstruo_imagen, monstruo_rectangulo)
+        
+    elif monstruo_izquierda:
+        frames_monstruo += 1
+        if frames_monstruo >= 21:
+            frames_monstruo = 1
+        if frames_monstruo < 11:
+            monstruo_imagen = monstruo1_izq
+        elif frames_monstruo < 21:
+            monstruo_imagen = monstruo2_izq
+            
+        ventana.blit(monstruo_imagen, monstruo_rectangulo)            
+
+    elif monstruo_abajo:
+        frames_monstruo += 1
+        if frames_monstruo >= 21:
+            frames_monstruo = 1
+        if frames_monstruo < 11:
+            monstruo_imagen = monstruo1_baj
+        elif frames_monstruo < 21:
+            monstruo_imagen = monstruo2_baj
+            
+        ventana.blit(monstruo_imagen, monstruo_rectangulo)            
+
+    elif monstruo_arriba:
+        frames_monstruo += 1
+        if frames_monstruo >= 21:
+            frames_monstruo = 1
+        if frames_monstruo < 11:
+            monstruo_imagen = monstruo1_arr
+        elif frames_monstruo < 21:
+            monstruo_imagen = monstruo2_arr
+            
+        ventana.blit(monstruo_imagen, monstruo_rectangulo)            
+
+    elif monstruo_parado:
+        monstruo_imagen = monstruo0_par
+
+        ventana.blit(monstruo_imagen, monstruo_rectangulo) 
+
+    # Movimiento personaje
+    
     if moviendose_derecha:
         frames_jugador += 1
         if frames_jugador >= 21:
@@ -259,6 +289,7 @@ while jugando:
     else:
         jugador_imagen = jugador0_par
         ventana.blit(jugador_imagen, jugador_rectangulo)
+  
 
     # Actualizar
     pygame.display.update()
@@ -266,3 +297,4 @@ while jugando:
 
 # Salir
 pygame.quit()
+

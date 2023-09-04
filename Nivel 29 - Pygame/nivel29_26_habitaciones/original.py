@@ -1,7 +1,8 @@
+
 import pygame
 import copy
 
-# inicializamos
+# Inicializar
 pygame.init()
 
 # Medidas
@@ -9,15 +10,17 @@ ANCHO = 1280
 ALTO = 720
 
 # Colores
-NEGRO = (0, 0, 0)
 BLANCO = (255, 255, 255)
+NEGRO = (0, 0, 0)
 VERDE = (0, 255, 0)
 MARRON = (77, 38, 0)
 AZUL = (0, 0, 255)
 GRIS = (184, 184, 184)
 
 
-# Mapas
+# Mapa
+
+
 mapa1 = [
     "         F      ",
     " F            F ",
@@ -45,6 +48,7 @@ mapa2 = [
 
 
 # Funciones
+
 def construir_mapa(superficie, mapa):
     limites = []
     frutas = []
@@ -68,17 +72,19 @@ def construir_mapa(superficie, mapa):
         y += 80
     return limites, frutas, puertas
 
+
 # Ventana
+
 ventana = pygame.display.set_mode((ANCHO, ALTO))
 reloj = pygame.time.Clock()
 
-baldosa_muro = pygame.image.load('baldosa_muro.png').convert()
-baldosa_agua = pygame.image.load('baldosa_agua.png').convert()
-baldosa_puerta = pygame.image.load('baldosa_puerta.png').convert_alpha()
-baldosa_manzana = pygame.image.load('baldosa_manzana.png').convert_alpha()
-baldosa_arbol = pygame.image.load('baldosa_arbol.png').convert_alpha()
+imagen_fondo = pygame.image.load("fondo_mapa.png").convert()
 
-fondo = pygame.image.load("fondo_mapa.png").convert_alpha()
+baldosa_muro = pygame.image.load("baldosa_muro.png").convert()
+baldosa_agua = pygame.image.load("baldosa_agua.png").convert()
+baldosa_arbol = pygame.image.load("baldosa_arbol.png").convert_alpha()
+baldosa_puerta = pygame.image.load("baldosa_puerta.png").convert_alpha()
+baldosa_manzana = pygame.image.load("baldosa_manzana.png").convert_alpha()
 
 jugador0_par = pygame.image.load("par_0.png").convert_alpha()
 jugador1_der = pygame.image.load("der_1.png").convert_alpha()
@@ -100,8 +106,8 @@ jugador4_baj = pygame.image.load("baj_4.png").convert_alpha()
 
 jugador_imagen = jugador0_par
 
-
 # Datos
+
 habitacion1 = construir_mapa(ventana, mapa1)
 habitacion2 = construir_mapa(ventana, mapa2)
 
@@ -116,10 +122,11 @@ jugador_vel_x = 0
 jugador_vel_y = 0
 frames_jugador = 0
 
-
 # Bucle principal
+
 jugando = True
 while jugando:
+
     reloj.tick(60)
 
     # Eventos
@@ -150,14 +157,11 @@ while jugando:
         jugador_vel_y = 3
         moviendose_abajo = True
 
+    # Lógica
 
-    # LÓGICA
-
-    # actuaclizamos la posición
     jugador_rectangulo.x += jugador_vel_x
     jugador_rectangulo.y += jugador_vel_y
 
-    # verificamos que no se sale de la pantall
     if jugador_rectangulo.x > ANCHO - 60:
         jugador_rectangulo.x = ANCHO - 60
     if jugador_rectangulo.x < 0:
@@ -167,17 +171,16 @@ while jugando:
     if jugador_rectangulo.y < 0:
         jugador_rectangulo.y = 0
 
-    # comprobamos colisiones con las diferentes baldiosas
-    for limite in habitacion[0]:# (limites)
+    for limite in habitacion[0]:
         if jugador_rectangulo.colliderect(limite[1]):
             jugador_rectangulo.x -= jugador_vel_x
             jugador_rectangulo.y -= jugador_vel_y
 
-    for fruta in copy.copy(habitacion[1]):# (frutas)
+    for fruta in copy.copy(habitacion[1]):
         if jugador_rectangulo.collidepoint(fruta[1].centerx, fruta[1].centery):
             habitacion[1].remove(fruta)
 
-    for puerta in habitacion[2]: # (puertas)
+    for puerta in habitacion[2]:
         if jugador_rectangulo.collidepoint(puerta[1].centerx, puerta[1].centery):
             if habitacion == habitacion1:
                 habitacion = habitacion2
@@ -190,7 +193,7 @@ while jugando:
                 
     # Dibujos
 
-    ventana.blit(fondo, (0,0))
+    ventana.blit(imagen_fondo, (0,0))
 
     for elemento in habitacion:
         for baldosa in elemento:
@@ -259,6 +262,7 @@ while jugando:
     else:
         jugador_imagen = jugador0_par
         ventana.blit(jugador_imagen, jugador_rectangulo)
+  
 
     # Actualizar
     pygame.display.update()
@@ -266,3 +270,4 @@ while jugando:
 
 # Salir
 pygame.quit()
+
