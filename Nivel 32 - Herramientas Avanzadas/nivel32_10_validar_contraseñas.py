@@ -65,7 +65,7 @@ while True:
     intentos += 1
 
     if valida_contraseña(contra):
-        print(f"La contraseña imntroducida ha sido {contra}")
+        print(f"La contraseña introducida ha sido {contra}")
         break
     elif intentos > 5:
         contra = None
