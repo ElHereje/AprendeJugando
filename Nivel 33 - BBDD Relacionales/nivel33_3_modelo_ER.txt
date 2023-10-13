@@ -1,0 +1,7 @@
+'''
+Se basa en 3 elementos:
+* entidades --> objeto de la realidad del que se quiere guardadr informacion en la BBDD.
+                cada objeto es una ocurrencia (se representan con cuadrados)
+* atributos --> características de las entidades. Se repreeentan con elipses
+* relaciones --> asociaciones entre entidades. Se representan con rombos
+'''

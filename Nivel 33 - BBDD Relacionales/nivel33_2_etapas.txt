@@ -1,0 +1,9 @@
+
+1 - Análisis de requisitos: Lenguaje Natural
+        preguntar que se necesita
+2 - Diseño conceptual: Entidad - Relación
+        sacar de la descripcion los conceptos fundamentales
+3 - Diseño lógico: Modelo Relacional
+        se define la estructura lógica
+4 - Diseño Físico: Implementación en SGBD con SQL
+        se elige un SGBD y se define la BBDD
