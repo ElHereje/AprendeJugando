@@ -1,0 +1,10 @@
+Cardinalidad dfe una relación --> Nº máx. de ocurrencias de una entidad que pueden
+estar asociadas a una ocurrencia de otra entidad:
+
+* De un a muchos (1:N)
+        o
+  de muchos a uno (N:1)
+
+* De uno a uno (1:1)
+
+* De muchos a muchos (M:N)  --> entidades Asociativas (la relación puede obtener atributos)

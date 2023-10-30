@@ -1,0 +1,12 @@
+RELACIONES
+
+1. Grado
+2. Cardinalidad (Correspondencia)(Cardinalidad Máxima)
+3. Participación (Cardinalidad mínima)
+
+según el grado:
+
+Grado uno: Unarias o reflexivas
+Grado dos: Binarias (son las mas comunes)
+Grado tres: ternarias
+Grado n: N-arias

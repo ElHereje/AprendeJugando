@@ -1,0 +1,14 @@
+
+Atributo Identificador.
+
+Son un atributo o conjunto de atributos que permiten identificar
+- unívocamente (su valor será único y diferente)
+- mínimamente (no habrá atributos innecesarios)
+una ocurrencia de las demás ocurrencias de una entidad.
+
+Si una entidad no tiene un identificador, habrá que añadírselo.
+
+
+Candidatos: Todos los posibles atributos identificadores:
+PPal o clave: el eliegido por el diseñador.
+Alternativos: El resto de candidatos

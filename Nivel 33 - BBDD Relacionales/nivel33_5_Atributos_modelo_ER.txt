@@ -1,0 +1,5 @@
+Tipos de Atributos:
+
+1 - Simples (atómicos) o Compuestos
+2 - Monovaluados o Multivaluados
+3 - Almacenados o Derivados

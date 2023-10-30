@@ -1,0 +1,5 @@
+
+Participación o cardinalidad mínima
+
+Total u Obligatoria - 1
+Parcial u Opcional - 0
